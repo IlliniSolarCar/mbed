@@ -26,6 +26,8 @@
 #endif
 #include <errno.h>
 
+#if DEVICE_RETARGET
+
 #if defined(__ARMCC_VERSION)
 #   include <rt_sys.h>
 #   define PREFIX(x)    _sys##x
@@ -394,6 +396,8 @@ extern "C" int mkdir(const char *path, mode_t mode) {
 
     return fs->mkdir(fp.fileName(), mode);
 }
+
+#endif
 
 #if defined(TOOLCHAIN_GCC)
 /* prevents the exception handling name demangling code getting pulled in */

@@ -203,6 +203,154 @@ int spi_master_write(spi_t *obj, int value) {
     return ssp_read(obj);
 }
 
+void spi_master_write_array(spi_t *obj, const int* values, int len) {
+	int wordsWritten = 0;
+	int wordsRead = 0;
+    while (!ssp_writeable(obj));
+    while ((wordsWritten < len)) {
+        while (ssp_writeable(obj) && (wordsWritten < len)) {
+            obj->spi->DR = values[wordsWritten++];
+        }
+        while (ssp_readable(obj) && (wordsRead < len)) {
+            obj->spi->DR;
+            wordsRead++;
+        }
+    }
+
+    while (wordsRead < len) {
+    	ssp_read(obj);
+    	wordsRead++;
+    }
+}
+
+void spi_master_write_array_u8(spi_t *obj, const uint8_t* values, int len) {
+	int wordsWritten = 0;
+	int wordsRead = 0;
+    while (!ssp_writeable(obj));
+    while ((wordsWritten < len)) {
+        while (ssp_writeable(obj) && (wordsWritten < len)) {
+            obj->spi->DR = values[wordsWritten++];
+        }
+        while (ssp_readable(obj) && (wordsRead < len)) {
+            obj->spi->DR;
+            wordsRead++;
+        }
+    }
+
+    while (wordsRead < len) {
+    	ssp_read(obj);
+    	wordsRead++;
+    }
+}
+
+void spi_master_write_array_u16(spi_t *obj, const uint16_t* values, int len) {
+	int wordsWritten = 0;
+	int wordsRead = 0;
+    while (!ssp_writeable(obj));
+    while ((wordsWritten < len)) {
+        while (ssp_writeable(obj) && (wordsWritten < len)) {
+            obj->spi->DR = values[wordsWritten++];
+        }
+        while (ssp_readable(obj) && (wordsRead < len)) {
+            obj->spi->DR;
+            wordsRead++;
+        }
+    }
+
+    while (wordsRead < len) {
+    	ssp_read(obj);
+    	wordsRead++;
+    }
+}
+
+void spi_master_read_array(spi_t *obj, int* values, int len) {
+	int wordsWritten = 0;
+	int wordsRead = 0;
+    while (!ssp_writeable(obj));
+    while ((wordsWritten < len) || (wordsRead < len)) {
+        while (ssp_writeable(obj) && (wordsWritten < len)) {
+            obj->spi->DR = 0;
+            wordsWritten++;
+        }
+        while (ssp_readable(obj) && (wordsRead < len)) {
+            values[wordsRead++] = obj->spi->DR;
+        }
+    }
+}
+
+void spi_master_read_array_u8(spi_t *obj, uint8_t* values, int len) {
+	int wordsWritten = 0;
+	int wordsRead = 0;
+    while (!ssp_writeable(obj));
+    while ((wordsWritten < len) || (wordsRead < len)) {
+        while (ssp_writeable(obj) && (wordsWritten < len)) {
+            obj->spi->DR = 0;
+            wordsWritten++;
+        }
+        while (ssp_readable(obj) && (wordsRead < len)) {
+            values[wordsRead++] = obj->spi->DR;
+        }
+    }
+}
+
+void spi_master_read_array_u16(spi_t *obj, uint16_t* values, int len) {
+	int wordsWritten = 0;
+	int wordsRead = 0;
+    while (!ssp_writeable(obj));
+    while ((wordsWritten < len) || (wordsRead < len)) {
+        while (ssp_writeable(obj) && (wordsWritten < len)) {
+            obj->spi->DR = 0;
+            wordsWritten++;
+        }
+        while (ssp_readable(obj) && (wordsRead < len)) {
+            values[wordsRead++] = obj->spi->DR;
+        }
+    }
+}
+
+void spi_master_transfer(spi_t *obj, int* values, int len) {
+	int wordsWritten = 0;
+	int wordsRead = 0;
+    while (!ssp_writeable(obj));
+    while ((wordsWritten < len) || (wordsRead < len)) {
+        while (ssp_writeable(obj) && (wordsWritten < len)) {
+            obj->spi->DR = values[wordsWritten++];
+        }
+        while (ssp_readable(obj) && (wordsRead < len)) {
+            values[wordsRead++] = obj->spi->DR;
+        }
+    }
+}
+
+
+void spi_master_transfer_u8(spi_t *obj, uint8_t* values, int len) {
+	int wordsWritten = 0;
+	int wordsRead = 0;
+    while (!ssp_writeable(obj));
+    while ((wordsWritten < len) || (wordsRead < len)) {
+        while (ssp_writeable(obj) && (wordsWritten < len)) {
+            obj->spi->DR = values[wordsWritten++];
+        }
+        while (ssp_readable(obj) && (wordsRead < len)) {
+            values[wordsRead++] = obj->spi->DR;
+        }
+    }
+}
+
+void spi_master_transfer_u16(spi_t *obj, uint16_t* values, int len) {
+	int wordsWritten = 0;
+	int wordsRead = 0;
+    while (!ssp_writeable(obj));
+    while ((wordsWritten < len) || (wordsRead < len)) {
+        while (ssp_writeable(obj) && (wordsWritten < len)) {
+            obj->spi->DR = values[wordsWritten++];
+        }
+        while (ssp_readable(obj) && (wordsRead < len)) {
+            values[wordsRead++] = obj->spi->DR;
+        }
+    }
+}
+
 int spi_slave_receive(spi_t *obj) {
     return ssp_readable(obj) ? (1) : (0);
 }

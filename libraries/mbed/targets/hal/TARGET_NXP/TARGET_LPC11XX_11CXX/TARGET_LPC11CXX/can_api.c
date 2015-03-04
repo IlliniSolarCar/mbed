@@ -22,7 +22,8 @@
 #include <string.h>
 
 /* Handy defines */
-#define MSG_OBJ_MAX      32
+#define RX_MSG_OBJ_COUNT 31
+#define TX_MSG_OBJ_COUNT 1
 #define DLC_MAX          8
 
 #define ID_STD_MASK      0x07FF
@@ -31,6 +32,9 @@
 
 static uint32_t can_irq_id = 0;
 static can_irq_handler irq_handler;
+
+static uint32_t tx_interrupts = 0;
+static uint32_t rx_interrupts = 0;
 
 static uint32_t can_disable(can_t *obj) {
     uint32_t sm = LPC_CAN->CNTL;
@@ -48,6 +52,22 @@ int can_mode(can_t *obj, CanMode mode) {
     return 0; // not implemented
 }
 
+static inline void can_clear_interrupt(int32_t handle) {
+    if (0 < handle && handle <= 32) {
+        // Make sure the interface is available
+        while( LPC_CAN->IF2_CMDREQ & CANIFn_CMDREQ_BUSY );
+
+        // Just request that the message object's INTPND bit be cleared
+        LPC_CAN->IF2_CMDMSK = CANIFn_CMDMSK_CLRINTPND | CANIFn_CMDMSK_NEWDAT;
+
+        // Start Transfer to given message number
+        LPC_CAN->IF2_CMDREQ = BFN_PREP(handle, CANIFn_CMDREQ_MN);
+
+        // Wait until transfer to message ram complete - TODO: maybe not block??
+        while( LPC_CAN->IF2_CMDREQ & CANIFn_CMDREQ_BUSY );
+    }
+}
+
 int can_filter(can_t *obj, uint32_t id, uint32_t mask, CANFormat format, int32_t handle) {
     uint16_t i;
 
@@ -63,7 +83,7 @@ int can_filter(can_t *obj, uint32_t id, uint32_t mask, CANFormat format, int32_t
         }
     }
     
-    if(handle > 0 && handle < 32) {
+    if(handle > 0 && handle <= 32) {
         if(format == CANExtended) {
             // Mark message valid, Direction = TX, Extended Frame, Set Identifier and mask everything
             LPC_CAN->IF1_ARB1 = BFN_PREP(id, CANIFn_ARB1_ID);
@@ -78,7 +98,7 @@ int can_filter(can_t *obj, uint32_t id, uint32_t mask, CANFormat format, int32_t
         }
         
         // Use mask, single message object and set DLC
-        LPC_CAN->IF1_MCTRL = CANIFn_MCTRL_UMASK | CANIFn_MCTRL_EOB | CANIFn_MCTRL_RXIE | BFN_PREP(DLC_MAX, CANIFn_MCTRL_DLC);
+        LPC_CAN->IF1_MCTRL = CANIFn_MCTRL_UMASK | CANIFn_MCTRL_EOB | BFN_PREP(DLC_MAX, CANIFn_MCTRL_DLC);
 
         // Transfer all fields to message object
         LPC_CAN->IF1_CMDMSK = CANIFn_CMDMSK_WR | CANIFn_CMDMSK_MASK | CANIFn_CMDMSK_ARB | CANIFn_CMDMSK_CTRL;
@@ -94,7 +114,41 @@ int can_filter(can_t *obj, uint32_t id, uint32_t mask, CANFormat format, int32_t
 }
 
 static inline void can_irq() {
-    irq_handler(can_irq_id, IRQ_RX);
+    uint32_t intid = BFN_GET(LPC_CAN->INT, CANINT_INTID);
+    if (0x0001 <= intid && intid <= RX_MSG_OBJ_COUNT) {
+        can_clear_interrupt(intid);
+        if (rx_interrupts) {
+            irq_handler(can_irq_id, IRQ_RX);
+        } else {
+            can_clear_interrupt(intid);
+        }
+    } else if (RX_MSG_OBJ_COUNT < intid && intid <= 0x0020) {
+        can_clear_interrupt(intid);
+        if (tx_interrupts) {
+            irq_handler(can_irq_id, IRQ_TX);
+        } else {
+            can_clear_interrupt(intid);
+        }
+    } else if (intid == 0x8000) {
+        uint32_t status = LPC_CAN->STAT;
+        if ((status & CANSTAT_BOFF) != 0) {
+            irq_handler(can_irq_id, IRQ_BUS);
+        }
+        if ((status & CANSTAT_EWARN) != 0) {
+            irq_handler(can_irq_id, IRQ_ERROR);
+        }
+        if ((status & CANSTAT_EPASS) != 0) {
+            irq_handler(can_irq_id, IRQ_PASSIVE);
+        }
+        if ((status & CANSTAT_RXOK) != 0) {
+            LPC_CAN->STAT &= ~CANSTAT_RXOK;
+            irq_handler(can_irq_id, IRQ_RX);
+        }
+        if ((status & CANSTAT_TXOK) != 0) {
+            LPC_CAN->STAT &= ~CANSTAT_TXOK;
+            irq_handler(can_irq_id, IRQ_TX);
+        }
+    }
 }
 
 // Register CAN object's irq handler
@@ -105,7 +159,7 @@ void can_irq_init(can_t *obj, can_irq_handler handler, uint32_t id) {
 
 // Unregister CAN object's irq handler
 void can_irq_free(can_t *obj) {
-        LPC_CAN->CNTL &= ~CANCNTL_IE; // Disable Interrupts :)
+    LPC_CAN->CNTL &= ~CANCNTL_IE; // Disable Interrupts :)
 
     can_irq_id = 0;
     NVIC_DisableIRQ(CAN_IRQn);
@@ -113,9 +167,20 @@ void can_irq_free(can_t *obj) {
 
 // Clear or set a irq
 void can_irq_set(can_t *obj, CanIrqType type, uint32_t enable) {
+    switch (type) {
+        case IRQ_RX:
+            rx_interrupts = enable;
+            break;
+        case IRQ_TX:
+            tx_interrupts = enable;
+            break;
+        default:
+            return;
+    }
+
     // Put CAN in Reset Mode and enable interrupt
     can_disable(obj);
-    if(enable == 0) {
+    if(!(rx_interrupts || tx_interrupts)) {
         LPC_CAN->CNTL &= ~(CANCNTL_IE | CANCNTL_SIE);
     }
     else {
@@ -214,10 +279,39 @@ int can_config_rxmsgobj(can_t *obj) {
     LPC_CAN->IF1_ARB2 = 0;
     LPC_CAN->IF1_MCTRL = 0;
 
-    for ( i = 0; i < MSG_OBJ_MAX; i++ )
+    for ( i = 1; i <= RX_MSG_OBJ_COUNT; i++ )
     {
         // Transfer arb and control fields to message object
-        LPC_CAN->IF1_CMDMSK = CANIFn_CMDMSK_WR | CANIFn_CMDMSK_ARB | CANIFn_CMDMSK_CTRL | CANIFn_CMDMSK_TXRQST;
+        LPC_CAN->IF1_CMDMSK = CANIFn_CMDMSK_WR | CANIFn_CMDMSK_ARB | CANIFn_CMDMSK_CTRL;
+
+        // Start Transfer to given message number
+        LPC_CAN->IF1_CMDREQ = BFN_PREP(i, CANIFn_CMDREQ_MN);
+
+        // Wait until transfer to message ram complete - TODO: maybe not block??
+        while( LPC_CAN->IF1_CMDREQ & CANIFn_CMDREQ_BUSY );
+    }
+
+    // Accept all messages
+    can_filter(obj, 0, 0, CANStandard, 1);
+
+    return 1;
+}
+
+int can_config_txmsgobj(can_t *obj) {
+    uint16_t i = 0;
+
+    // Make sure the interface is available
+    //while( LPC_CAN->IF1_CMDREQ & CANIFn_CMDREQ_BUSY );
+
+    // Mark message valid, Direction = TX, Don't care about anything else
+    LPC_CAN->IF1_ARB1 = 0;
+    LPC_CAN->IF1_ARB2 = CANIFn_ARB2_DIR;
+    LPC_CAN->IF1_MCTRL = 0;
+
+    for ( i = RX_MSG_OBJ_COUNT + 1; i <= (TX_MSG_OBJ_COUNT + RX_MSG_OBJ_COUNT); i++ )
+    {
+        // Transfer arb and control fields to message object
+        LPC_CAN->IF1_CMDMSK = CANIFn_CMDMSK_WR | CANIFn_CMDMSK_ARB | CANIFn_CMDMSK_CTRL;
         
         // Start Transfer to given message number
         LPC_CAN->IF1_CMDREQ = BFN_PREP(i, CANIFn_CMDREQ_MN);
@@ -225,9 +319,6 @@ int can_config_rxmsgobj(can_t *obj) {
         // Wait until transfer to message ram complete - TODO: maybe not block??
         while( LPC_CAN->IF1_CMDREQ & CANIFn_CMDREQ_BUSY );
     }
-    
-    // Accept all messages
-    can_filter(obj, 0, 0, CANStandard, 1);
     
     return 1;
 }
@@ -251,6 +342,7 @@ void can_init(can_t *obj, PinName rd, PinName td) {
     
     // Initialize RX message object
     can_config_rxmsgobj(obj);
+    can_config_txmsgobj(obj);
 }
 
 void can_free(can_t *obj) {
@@ -278,10 +370,24 @@ int can_frequency(can_t *obj, int f) {
 }
 
 int can_write(can_t *obj, CAN_Message msg, int cc) {
-    uint16_t msgnum = 0;
-    
     // Make sure controller is enabled
     can_enable(obj);
+
+    // Find first message object that isn't pending to send
+    uint16_t msgnum = 0;
+    uint32_t txPending = (LPC_CAN->TXREQ1 & 0xFF) | (LPC_CAN->TXREQ2 << 16);
+    uint16_t i = 0;
+    for(i = RX_MSG_OBJ_COUNT; i < 32; i++) {
+        if ((txPending & (1 << i)) == 0) {
+            msgnum = i+1;
+            break;
+        }
+    }
+
+    // If no messageboxes are available, stop and return failure
+    if (msgnum == 0) {
+        return 0;
+    }
     
     // Make sure the interface is available
     while( LPC_CAN->IF1_CMDREQ & CANIFn_CMDREQ_BUSY );
@@ -315,7 +421,7 @@ int can_write(can_t *obj, CAN_Message msg, int cc) {
 
     // Transfer all fields to message object
     LPC_CAN->IF1_CMDMSK = CANIFn_CMDMSK_WR | CANIFn_CMDMSK_MASK | CANIFn_CMDMSK_ARB | CANIFn_CMDMSK_CTRL | CANIFn_CMDMSK_TXRQST | CANIFn_CMDMSK_DATA_A | CANIFn_CMDMSK_DATA_B;
-    
+
     // Start Transfer to given message number
     LPC_CAN->IF1_CMDREQ = BFN_PREP(msgnum, CANIFn_CMDREQ_MN);
     
@@ -339,7 +445,7 @@ int can_read(can_t *obj, CAN_Message *msg, int handle) {
     if(handle == 0) {
         uint32_t newdata = LPC_CAN->ND1 | (LPC_CAN->ND2 << 16);
         // Find first free messagebox
-        for(i = 0; i < 32; i++) {
+        for(i = 0; i < RX_MSG_OBJ_COUNT; i++) {
             if(newdata & (1 << i)) {
                 handle = i+1;
                 break;
@@ -347,7 +453,7 @@ int can_read(can_t *obj, CAN_Message *msg, int handle) {
         }
     }
     
-    if(handle > 0 && handle < 32) {
+    if(handle > 0 && handle <= 32) {
         // Wait until message interface is free
         while( LPC_CAN->IF2_CMDREQ & CANIFn_CMDREQ_BUSY );
 
@@ -394,11 +500,34 @@ int can_read(can_t *obj, CAN_Message *msg, int handle) {
     return 0;
 }
 
+CanTxState can_tx_status(can_t *obj) {
+    // Count how many message boxes are available
+    uint32_t txPending = (LPC_CAN->TXREQ1 & 0xFF) | (LPC_CAN->TXREQ2 << 16);
+    int i = 0;
+    int count = 0;
+    if (txPending != 0) {
+        for(i = RX_MSG_OBJ_COUNT; i < 32; i++) {
+            if ((txPending & (1 << i)) != 0) {
+                count++;
+            }
+        }
+    }
+
+    if (count == 0) {
+        return TX_STATE_IDLE;
+    } else if (count == TX_MSG_OBJ_COUNT) {
+        return TX_STATE_BUSY;
+    } else {
+        return TX_STATE_AVAILABLE;
+    }
+}
+
 void can_reset(can_t *obj) {
     LPC_SYSCON->PRESETCTRL &= ~PRESETCTRL_CAN_RST_N;
     LPC_CAN->STAT = 0;
     
     can_config_rxmsgobj(obj);
+    can_config_txmsgobj(obj);
 }
 
 unsigned char can_rderror(can_t *obj) {

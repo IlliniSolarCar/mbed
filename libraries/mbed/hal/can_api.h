@@ -50,6 +50,12 @@ typedef enum {
     MODE_TEST_SILENT
 } CanMode;
 
+typedef enum {
+	TX_STATE_IDLE,
+	TX_STATE_AVAILABLE,
+	TX_STATE_BUSY
+} CanTxState;
+
 typedef void (*can_irq_handler)(uint32_t id, CanIrqType type);
 
 typedef struct can_s can_t;
@@ -67,6 +73,7 @@ int           can_read     (can_t *obj, CAN_Message *msg, int handle);
 int           can_mode     (can_t *obj, CanMode mode);
 int           can_filter(can_t *obj, uint32_t id, uint32_t mask, CANFormat format, int32_t handle);
 void          can_reset    (can_t *obj);
+CanTxState    can_tx_status(can_t *obj);
 unsigned char can_rderror  (can_t *obj);
 unsigned char can_tderror  (can_t *obj);
 void          can_monitor  (can_t *obj, int silent);

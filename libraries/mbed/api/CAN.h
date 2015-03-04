@@ -145,6 +145,21 @@ public:
      */
     void reset();
 
+    enum TxStatus {
+    	Idle = 0,
+    	Available,
+    	Busy
+    };
+
+    /** Queries the current status of the CAN transmission interface
+     *
+     *  @returns
+     *    CAN::Idle if no messages are pending transmission
+     *    CAN::Available if some messages are pending transmission
+     *    CAN::Busy if the message transmission interface is full
+     */
+    TxStatus txstatus();
+
     /** Puts or removes the CAN interface into silent monitoring mode
      *
      *  @param silent boolean indicating whether to go into silent mode or not

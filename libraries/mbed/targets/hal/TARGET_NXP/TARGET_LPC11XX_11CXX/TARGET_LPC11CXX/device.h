@@ -16,6 +16,8 @@
 #ifndef MBED_DEVICE_H
 #define MBED_DEVICE_H
 
+#define DEVICE_RETARGET         1
+
 #define DEVICE_PORTIN           1
 #define DEVICE_PORTOUT          1
 #define DEVICE_PORTINOUT        1
@@ -51,8 +53,6 @@
 #define DEVICE_DEBUG_AWARENESS  0
 
 #define DEVICE_STDIO_MESSAGES   1
-
-#define DEVICE_ERROR_PATTERN    1
 
 #include "objects.h"
 
