@@ -74,3 +74,4 @@ cscope.*
 *.swp
 
 /Debug/
+/LPC1549/
