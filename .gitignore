@@ -11,7 +11,6 @@ private_settings.py
 
 # Default Build Directory
 build/
-Debug/
 
 # Eclipse Project Files
 .cproject
@@ -74,3 +73,4 @@ cscope.*
 # vim swap files
 *.swp
 
+/Debug/
