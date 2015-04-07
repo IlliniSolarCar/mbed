@@ -73,3 +73,5 @@ cscope.*
 # vim swap files
 *.swp
 
+/Debug/
+/LPC1549/
