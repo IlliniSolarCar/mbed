@@ -92,56 +92,6 @@ public:
     */
     virtual int write(int value);
 
-    /** Write data from an array and read the response
-     *  back into the same array
-     *
-     *  @param values Array of data exchanged between
-     *                the master and slave
-     *  @param len Number of data words to transfer
-     *
-     *  @returns
-     *    Response from the SPI slave, via `values`
-     */
-    void transfer(int* values, int len);
-    void transfer(uint8_t* values, int len);
-    void transfer(uint16_t* values, int len);
-
-    template <typename WordType, int len>
-    void transfer(WordType (&values)[len]) {
-        transfer(values, len);
-    }
-
-    /** Write data from an array
-     *
-     *  @param values Array of data to write to the slave
-     *  @param len Number of data words to write
-     */
-    void write_array(const int* values, int len);
-    void write_array(const uint8_t* values, int len);
-    void write_array(const uint16_t* values, int len);
-
-    template <typename WordType, int len>
-	void write_array(const WordType (&values)[len]) {
-	    write_array(values, len);
-	}
-
-    /** Read data from an array, writing all zeroes
-	 *
-	 *  @param values Array of data to read the slave response into
-	 *  @param len Number of data words to read
-	 *
-	 *  @returns
-     *    Response from the SPI slave, via `values`
-	 */
-	void read_array(int* values, int len);
-	void read_array(uint8_t* values, int len);
-	void read_array(uint16_t* values, int len);
-
-	template <typename WordType, int len>
-	void read_array(WordType (&values)[len]) {
-		read_array(values, len);
-	}
-
 public:
     virtual ~SPI() {
     }

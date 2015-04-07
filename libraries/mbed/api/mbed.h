@@ -54,7 +54,6 @@
 #include "Timer.h"
 #include "Ticker.h"
 #include "Timeout.h"
-#include "EventCounter.h"
 #include "LocalFileSystem.h"
 #include "InterruptIn.h"
 #include "wait_api.h"

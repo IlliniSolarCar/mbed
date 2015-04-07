@@ -58,51 +58,6 @@ int SPI::write(int value) {
     return spi_master_write(&_spi, value);
 }
 
-void SPI::transfer(int* values, int len) {
-    aquire();
-    spi_master_transfer(&_spi, values, len);
-}
-
-void SPI::transfer(uint8_t* values, int len) {
-    aquire();
-    spi_master_transfer_u8(&_spi, values, len);
-}
-
-void SPI::transfer(uint16_t* values, int len) {
-    aquire();
-    spi_master_transfer_u16(&_spi, values, len);
-}
-
-void SPI::write_array(const int* values, int len) {
-    aquire();
-    spi_master_write_array(&_spi, values, len);
-}
-
-void SPI::write_array(const uint8_t* values, int len) {
-    aquire();
-    spi_master_write_array_u8(&_spi, values, len);
-}
-
-void SPI::write_array(const uint16_t* values, int len) {
-    aquire();
-    spi_master_write_array_u16(&_spi, values, len);
-}
-
-void SPI::read_array(int* values, int len) {
-    aquire();
-    spi_master_read_array(&_spi, values, len);
-}
-
-void SPI::read_array(uint8_t* values, int len) {
-    aquire();
-    spi_master_read_array_u8(&_spi, values, len);
-}
-
-void SPI::read_array(uint16_t* values, int len) {
-    aquire();
-    spi_master_read_array_u16(&_spi, values, len);
-}
-
 } // namespace mbed
 
 #endif
