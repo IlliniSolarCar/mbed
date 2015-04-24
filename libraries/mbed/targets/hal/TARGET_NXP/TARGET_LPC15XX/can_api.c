@@ -57,6 +57,13 @@
 #define CANIFn_CMDMSK_RD        (0UL << 7)
 #define CANIFn_CMDREQ_BUSY      (1UL << 15)
 
+#define CANSTAT_TXOK                   (1 << 3)           // Transmitted a message successfully This bit must be reset by the CPU. It is never reset by the CAN controller.
+#define CANSTAT_RXOK                   (1 << 4)           // Received a message successfully This bit must be reset by the CPU. It is never reset by the CAN controller.
+#define CANSTAT_EPASS                  (1 << 5)           // Error passive
+#define CANSTAT_EWARN                  (1 << 6)           // Warning status
+#define CANSTAT_BOFF                   (1 << 7)           // Busoff status
+
+
 static uint32_t can_irq_id = 0;
 static can_irq_handler irq_handler;
 
@@ -80,16 +87,16 @@ int can_mode(can_t *obj, CanMode mode) {
 static inline void can_clear_interrupt(int32_t handle) {
     if (0 < handle && handle <= 32) {
         // Make sure the interface is available
-        while( LPC_C_CAN0->IF2_CMDREQ & CANIFn_CMDREQ_BUSY );
+        while( LPC_C_CAN0->CANIF2_CMDREQ & CANIFn_CMDREQ_BUSY );
 
         // Just request that the message object's INTPND bit be cleared
-        LPC_C_CAN0->IF2_CMDMSK = CANIFn_CMDMSK_CLRINTPND | CANIFn_CMDMSK_NEWDAT;
-
+        LPC_C_CAN0->CANIF2_CMDMSK_W = CANIFn_CMDMSK_CLRINTPND | CANIFn_CMDMSK_NEWDAT;
+        // In a union with CMDMSK_R
         // Start Transfer to given message number
-        LPC_C_CAN0->IF2_CMDREQ = BFN_PREP(handle, CANIFn_CMDREQ_MN);
+        LPC_C_CAN0->CANIF2_CMDREQ = handle & 0x3F;
 
         // Wait until transfer to message ram complete - TODO: maybe not block??
-        while( LPC_C_CAN0->IF2_CMDREQ & CANIFn_CMDREQ_BUSY );
+        while( LPC_C_CAN0->CANIF2_CMDREQ & CANIFn_CMDREQ_BUSY );
     }
 }
 
@@ -140,7 +147,7 @@ int can_filter(can_t *obj, uint32_t id, uint32_t mask, CANFormat format, int32_t
 }
 
 static inline void can_irq() {
-    uint32_t intid = BFN_GET(LPC_C_CAN0->INT, CANINT_INTID);
+    uint32_t intid = LPC_C_CAN0->CANINT & 0xFFFF;
     if (0x0001 <= intid && intid <= RX_MSG_OBJ_COUNT) {
         can_clear_interrupt(intid);
         if (rx_interrupts) {
@@ -156,7 +163,7 @@ static inline void can_irq() {
             can_clear_interrupt(intid);
         }
     } else if (intid == 0x8000) {
-        uint32_t status = LPC_C_CAN0->STAT;
+        uint32_t status = LPC_C_CAN0->CANSTAT;
         if ((status & CANSTAT_BOFF) != 0) {
             irq_handler(can_irq_id, IRQ_BUS);
         }
@@ -167,11 +174,11 @@ static inline void can_irq() {
             irq_handler(can_irq_id, IRQ_PASSIVE);
         }
         if ((status & CANSTAT_RXOK) != 0) {
-            LPC_C_CAN0->STAT &= ~CANSTAT_RXOK;
+            LPC_C_CAN0->CANSTAT &= ~CANSTAT_RXOK;
             irq_handler(can_irq_id, IRQ_RX);
         }
         if ((status & CANSTAT_TXOK) != 0) {
-            LPC_C_CAN0->STAT &= ~CANSTAT_TXOK;
+            LPC_C_CAN0->CANSTAT &= ~CANSTAT_TXOK;
             irq_handler(can_irq_id, IRQ_TX);
         }
     }
@@ -320,20 +327,21 @@ int can_config_txmsgobj(can_t *obj) {
     //while( LPC_C_CAN0->IF1_CMDREQ & CANIFn_CMDREQ_BUSY );
 
     // Mark message valid, Direction = TX, Don't care about anything else
-    LPC_C_CAN0->IF1_ARB1 = 0;
-    LPC_C_CAN0->IF1_ARB2 = CANIFn_ARB2_DIR;
-    LPC_C_CAN0->IF1_MCTRL = 0;
+    LPC_C_CAN0->CANIF1_ARB1 = 0;
+    LPC_C_CAN0->CANIF1_ARB2 = CANIFn_ARB2_DIR;
+    LPC_C_CAN0->CANIF1_MCTRL = 0;
 
     for ( i = RX_MSG_OBJ_COUNT + 1; i <= (TX_MSG_OBJ_COUNT + RX_MSG_OBJ_COUNT); i++ )
     {
         // Transfer arb and control fields to message object
-        LPC_C_CAN0->IF1_CMDMSK = CANIFn_CMDMSK_WR | CANIFn_CMDMSK_ARB | CANIFn_CMDMSK_CTRL;
+        LPC_C_CAN0->CANIF1_CMDMSK_W = CANIFn_CMDMSK_WR | CANIFn_CMDMSK_ARB | CANIFn_CMDMSK_CTRL;
+        // In a union with CANIF1_CMDMSK_R
 
         // Start Transfer to given message number
-        LPC_C_CAN0->IF1_CMDREQ = BFN_PREP(i, CANIFn_CMDREQ_MN);
+        LPC_C_CAN0->CANIF1_CMDREQ = i & 0x3F;
 
         // Wait until transfer to message ram complete - TODO: maybe not block??
-        while( LPC_C_CAN0->IF1_CMDREQ & CANIFn_CMDREQ_BUSY );
+        while( LPC_C_CAN0->CANIF1_CMDREQ & CANIFn_CMDREQ_BUSY );
     }
 
     return 1;
@@ -395,7 +403,7 @@ int can_write(can_t *obj, CAN_Message msg, int cc) {
 
     // Find first message object that isn't pending to send
     uint16_t msgnum = 0;
-    uint32_t txPending = (LPC_C_CAN0->TXREQ1 & 0xFF) | (LPC_C_CAN0->TXREQ2 << 16);
+    uint32_t txPending = (LPC_C_CAN0->CANTXREQ1 & 0xFF) | (LPC_C_CAN0->CANTXREQ2 << 16);
     uint16_t i = 0;
     for(i = RX_MSG_OBJ_COUNT; i < 32; i++) {
         if ((txPending & (1 << i)) == 0) {
@@ -519,7 +527,7 @@ int can_read(can_t *obj, CAN_Message *msg, int handle) {
 
 CanTxState can_tx_status(can_t *obj) {
     // Count how many message boxes are available
-    uint32_t txPending = (LPC_C_CAN0->TXREQ1 & 0xFF) | (LPC_C_CAN0->TXREQ2 << 16);
+    uint32_t txPending = (LPC_C_CAN0->CANTXREQ1 & 0xFF) | (LPC_C_CAN0->CANTXREQ2 << 16);
     int i = 0;
     int count = 0;
     if (txPending != 0) {
