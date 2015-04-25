@@ -34,16 +34,6 @@ typedef enum {
     P1_0, P1_1, P1_2, P1_3, P1_4, P1_5, P1_6, P1_7, P1_8, P1_9, P1_10, P1_11, P1_12, P1_13, P1_14, P1_15, P1_16, P1_17, P1_18, P1_19, P1_20, P1_21, P1_22, P1_23, P1_24, P1_25, P1_26, P1_27, P1_28, P1_29, P1_30, P1_31,
     P2_0, P2_1, P2_2, P2_3, P2_4, P2_5, P2_6, P2_7, P2_8, P2_9, P2_10, P2_11, P2_12,
     
-    LED_RED = P0_25,
-    LED_GREEN = P0_3,
-    LED_BLUE = P1_1,
-    
-    // mbed original LED naming
-    LED1 = LED_RED,
-    LED2 = LED_GREEN,
-    LED3 = LED_BLUE,
-    LED4 = LED_BLUE,
-    
     // Serial to USB pins
     USBTX = P0_18,
     USBRX = P0_13,
