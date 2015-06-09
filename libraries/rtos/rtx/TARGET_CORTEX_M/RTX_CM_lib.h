@@ -214,7 +214,7 @@ osThreadDef_t os_thread_def_main = {(os_pthread)main, osPriorityNormal, 0, NULL}
 #elif defined(TARGET_LPC812)
 #define INITIAL_SP            (0x10001000UL)
 
-#elif defined(TARGET_LPC824)
+#elif defined(TARGET_LPC824) || defined(TARGET_SSCI824)
 #define INITIAL_SP            (0x10002000UL)
 
 #elif defined(TARGET_KL25Z)
@@ -297,6 +297,24 @@ osThreadDef_t os_thread_def_main = {(os_pthread)main, osPriorityNormal, 0, NULL}
 
 #elif defined(TARGET_STM32F401VC)
 #define INITIAL_SP            (0x20010000UL)
+
+#elif defined(TARGET_STM32F303RE)
+#define INITIAL_SP            (0x20010000UL)
+
+#elif defined(TARGET_MAX32610) || defined(TARGET_MAX32600)
+#define INITIAL_SP            (0x20008000UL)
+
+#elif defined(TARGET_TEENSY3_1)
+#define INITIAL_SP            (0x20008000UL)
+
+#elif defined(TARGET_STM32L152RE)
+#define INITIAL_SP            (0x20014000UL)
+
+#elif defined(TARGET_NZ32ST1L)
+#define INITIAL_SP            (0x20008000UL)
+
+#elif defined(TARGET_STM32F446RE)
+#define INITIAL_SP            (0x20020000UL)
 
 #else
 #error "no target defined"
@@ -471,14 +489,14 @@ void __iar_program_start( void )
   if (__low_level_init() != 0) {
     __iar_data_init3();
     mbed_sdk_init();
-    __iar_dynamic_initialization(); 
-  } 
+    __iar_dynamic_initialization();
+  }
   osKernelInitialize();
   set_main_stack();
   osThreadCreate(&os_thread_def_main, NULL);
   a = osKernelStart();
-  exit(a);  
-  
+  exit(a);
+
 }
 
 #endif

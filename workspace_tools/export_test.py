@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 """
 mbed SDK
 Copyright (c) 2011-2013 ARM Limited
@@ -36,7 +37,7 @@ def setup_test_user_prj():
         print 'Test user project already generated...'
         return
 
-    setup_user_prj(USER_PRJ, join(TEST_DIR, "rtos", "mbed", "basic"), [join(LIB_DIR, "rtos")])
+    setup_user_prj(USER_PRJ, join(TEST_DIR, "rtos", "mbed", "basic"), [join(LIB_DIR, "rtos"), join(LIB_DIR, "tests", "mbed", "env")])
 
     # FAKE BUILD URL
     open(join(USER_SRC, "mbed.bld"), 'w').write("http://mbed.org/users/mbed_official/code/mbed/builds/976df7c37ad5\n")
@@ -129,8 +130,12 @@ if __name__ == '__main__':
             ('uvision', 'NUCLEO_F401RE'),
             ('uvision', 'NUCLEO_F411RE'),
             ('uvision', 'NUCLEO_L053R8'),
+            ('uvision', 'NUCLEO_L073RZ'),
             ('uvision', 'NUCLEO_L152RE'),
             ('uvision', 'MTS_MDOT_F405RG'),
+            ('uvision', 'MAXWSNENV'),
+            ('uvision', 'MAX32600MBED'),
+            ('uvision', 'DISCO_F334C8'),
 
             ('lpcxpresso', 'LPC1768'),
             ('lpcxpresso', 'LPC4088'),
@@ -155,21 +160,28 @@ if __name__ == '__main__':
             ('gcc_arm', 'LPC11U35_501'),
             ('gcc_arm', 'LPCCAPPUCCINO'),
             ('gcc_arm', 'LPC2368'),
+            ('gcc_arm', 'LPC2460'),
+            ('gcc_arm', 'LPC824'),
+            ('gcc_arm', 'SSCI824'),
 
             ('gcc_arm', 'STM32F407'),
             ('gcc_arm', 'DISCO_F100RB'),
             ('gcc_arm', 'DISCO_F051R8'),
             ('gcc_arm', 'DISCO_F407VG'),
             ('gcc_arm', 'DISCO_F303VC'),
+            ('gcc_arm', 'DISCO_F334C8'),
             ('gcc_arm', 'NRF51822'),
             ('gcc_arm', 'HRM1017'),
             ('gcc_arm', 'NUCLEO_F401RE'),
             ('gcc_arm', 'NUCLEO_F411RE'),
             ('gcc_arm', 'DISCO_F429ZI'),
             ('gcc_arm', 'NUCLEO_F334R8'),
+            ('gcc_arm', 'MAX32600MBED'),
             ('gcc_arm', 'MTS_MDOT_F405RG'),
             ('gcc_arm', 'MTS_MDOT_F411RE'),
             ('gcc_arm', 'RZ_A1H'),
+            ('gcc_arm', 'MAXWSNENV'),
+            ('gcc_arm', 'MAX32600MBED'),
 
             ('ds5_5', 'LPC1768'), ('ds5_5', 'LPC11U24'),
 
@@ -187,13 +199,17 @@ if __name__ == '__main__':
             ('iar', 'NUCLEO_F401RE'),
             ('iar', 'NUCLEO_F411RE'),
             ('iar', 'NUCLEO_L053R8'),
+            ('iar', 'NUCLEO_L073RZ'),
             ('iar', 'NUCLEO_L152RE'),
+            ('iar', 'DISCO_F334C8'),
             ('iar', 'STM32F407'),
             ('iar', 'MTS_MDOT_F405RG'),
             ('iar', 'MTS_MDOT_F411RE'),
+            ('iar', 'MAXWSNENV'),
+            ('iar', 'MAX32600MBED'),
 
-            
-            (None, None),
+            # Removed following item to avoid script error
+            #(None, None),
         ]:
         print '\n=== Exporting to "%s::%s" ===' % (toolchain, target)
         test_export(toolchain, target)
