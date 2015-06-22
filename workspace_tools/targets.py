@@ -69,8 +69,19 @@ class Target:
 
     def init_hooks(self, hook, toolchain_name):
         pass
+##WIZnet
 
-
+class WIZwiki_W7500(Target):
+    def __init__(self):
+        Target.__init__(self)
+        self.core = "Cortex-M0"
+        self.extra_labels = ['WIZNET', 'W7500x', 'WIZwiki_W7500']
+        self.supported_toolchains = ["uARM", "ARM"]
+        self.default_toolchain = "ARM"
+        self.supported_form_factors = ["ARDUINO"]
+        
+        
+        
 ### NXP ###
 
 # This class implements the post-link patching step needed by LPC targets
@@ -253,6 +264,13 @@ class LPC2368(LPCTarget):
         self.core = "ARM7TDMI-S"
         self.extra_labels = ['NXP', 'LPC23XX']
         self.supported_toolchains = ["ARM", "GCC_ARM", "GCC_CR"]
+
+class LPC2460(LPCTarget):
+    def __init__(self):
+        LPCTarget.__init__(self)
+        self.core = "ARM7TDMI-S"
+        self.extra_labels = ['NXP', 'LPC2460']
+        self.supported_toolchains = ["GCC_ARM"]
 
 class LPC810(LPCTarget):
     def __init__(self):
@@ -587,6 +605,15 @@ class NUCLEO_F411RE(Target):
         self.supported_form_factors = ["ARDUINO", "MORPHO"]
         self.detect_code = ["0740"]
 
+class NUCLEO_F446RE(Target):
+    def __init__(self):
+        Target.__init__(self)
+        self.core = "Cortex-M4F"
+        self.extra_labels = ['STM', 'STM32F4', 'STM32F446RE']
+        self.supported_toolchains = ["GCC_ARM"]
+        self.default_toolchain = "uARM"
+        self.supported_form_factors = ["ARDUINO", "MORPHO"]
+        
 class NUCLEO_L053R8(Target):
     def __init__(self):
         Target.__init__(self)
@@ -673,9 +700,9 @@ class DISCO_F334C8(Target):
         Target.__init__(self)
         self.core = "Cortex-M4F"
         self.extra_labels = ['STM', 'STM32F3', 'STM32F334C8']
-        self.supported_toolchains = ["GCC_ARM",]
-        self.default_toolchain = "GCC_ARM"
-        self.detect_code = ["0735"]
+        self.supported_toolchains = ["ARM", "uARM", "IAR", "GCC_ARM"]
+        self.default_toolchain = "uARM"
+        self.detect_code = ["0810"]
 
 class DISCO_F407VG(Target):
     def __init__(self):
@@ -819,6 +846,13 @@ class UBLOX_C029(Target):
         self.default_toolchain = "uARM"
         self.supported_form_factors = ["ARDUINO"]
 
+class NZ32ST1L(Target):
+    def __init__(self):
+        Target.__init__(self)
+        self.core = "Cortex-M3"
+        self.extra_labels = ['STM', 'STM32L1', 'STM32L151RC']
+        self.supported_toolchains = ["ARM", "uARM", "GCC_ARM"]
+        self.default_toolchain = "uARM"
 
 
 ### Nordic ###
@@ -1054,58 +1088,74 @@ class DELTA_DFCM_NNN40_OTA(NRF51822):
         self.extra_labels = ['NORDIC', 'MCU_NRF51822', 'MCU_NORDIC_16K', 'DELTA_DFCM_NNN40']
         self.MERGE_SOFT_DEVICE = False
         self.macros += self.common_macros
+
+
 ### ARM ###
 
-class ARM_MPS2_M0(Target):
+class ARM_MPS2_Target(Target):
     def __init__(self):
         Target.__init__(self)
+        self.OUTPUT_EXT = 'axf'
+
+    def init_hooks(self, hook, toolchain_name):
+        hook.hook_add_binary("replace", self.output_axf)
+
+    @staticmethod
+    def output_axf(t_self, resources, elf, bin):
+        shutil.copy(elf, bin)
+        t_self.debug("Passing ELF file %s" % bin)
+
+
+class ARM_MPS2_M0(ARM_MPS2_Target):
+    def __init__(self):
+        ARM_MPS2_Target.__init__(self)
         self.core = "Cortex-M0"
-        self.extra_labels = ['ARM_SSG', 'MPS2_M0']
+        self.extra_labels = ['ARM_SSG', 'MPS2', 'MPS2_M0']
         self.macros = ['CMSDK_CM0']
         self.supported_toolchains = ["ARM", "GCC_ARM"]
         self.default_toolchain = "ARM"
 
-class ARM_MPS2_M0P(Target):
+class ARM_MPS2_M0P(ARM_MPS2_Target):
     def __init__(self):
-        Target.__init__(self)
+        ARM_MPS2_Target.__init__(self)
         self.core = "Cortex-M0+"
-        self.extra_labels = ['ARM_SSG', 'MPS2_M0P']
+        self.extra_labels = ['ARM_SSG', 'MPS2', 'MPS2_M0P']
         self.macros = ['CMSDK_CM0plus']
         self.supported_toolchains = ["ARM", "GCC_ARM"]
         self.default_toolchain = "ARM"
 
-class ARM_MPS2_M1(Target):
+class ARM_MPS2_M1(ARM_MPS2_Target):
     def __init__(self):
-        Target.__init__(self)
+        ARM_MPS2_Target.__init__(self)
         self.core = "Cortex-M1"
-        self.extra_labels = ['ARM_SSG', 'MPS2_M1']
+        self.extra_labels = ['ARM_SSG', 'MPS2', 'MPS2_M1']
         self.macros = ['CMSDK_CM1']
         self.supported_toolchains = ["ARM", "GCC_ARM"]
         self.default_toolchain = "ARM"
 
-class ARM_MPS2_M3(Target):
+class ARM_MPS2_M3(ARM_MPS2_Target):
     def __init__(self):
-        Target.__init__(self)
+        ARM_MPS2_Target.__init__(self)
         self.core = "Cortex-M3"
-        self.extra_labels = ['ARM_SSG', 'MPS2_M3']
+        self.extra_labels = ['ARM_SSG', 'MPS2', 'MPS2_M3']
         self.macros = ['CMSDK_CM3']
         self.supported_toolchains = ["ARM", "GCC_ARM"]
         self.default_toolchain = "ARM"
 
-class ARM_MPS2_M4(Target):
+class ARM_MPS2_M4(ARM_MPS2_Target):
     def __init__(self):
-        Target.__init__(self)
+        ARM_MPS2_Target.__init__(self)
         self.core = "Cortex-M4F"
-        self.extra_labels = ['ARM_SSG', 'MPS2_M4']
+        self.extra_labels = ['ARM_SSG', 'MPS2', 'MPS2_M4']
         self.macros = ['CMSDK_CM4']
         self.supported_toolchains = ["ARM", "GCC_ARM"]
         self.default_toolchain = "ARM"
 
-class ARM_MPS2_M7(Target):
+class ARM_MPS2_M7(ARM_MPS2_Target):
     def __init__(self):
-        Target.__init__(self)
+        ARM_MPS2_Target.__init__(self)
         self.core = "Cortex-M7F"
-        self.extra_labels = ['ARM_SSG', 'MPS2_M7']
+        self.extra_labels = ['ARM_SSG', 'MPS2', 'MPS2_M7']
         self.macros = ['CMSDK_CM7']
         self.supported_toolchains = ["ARM", "GCC_ARM"]
         self.default_toolchain = "ARM"
@@ -1149,7 +1199,9 @@ class MAX32600MBED(Target):
         self.supported_toolchains = ["GCC_ARM", "IAR", "ARM"]
         self.default_toolchain = "ARM"
 
+
 ### Silicon Labs ###
+
 class EFM32GG_STK3700(Target):
     def __init__(self):
         Target.__init__(self)
@@ -1201,6 +1253,9 @@ class EFM32HG_STK3400(Target):
 # Get a single instance for each target
 TARGETS = [
 
+    ### WIZnet ###
+    WIZwiki_W7500(),
+    
     ### NXP ###
     LPC11C24(),
     LPC11U24(),
@@ -1224,6 +1279,7 @@ TARGETS = [
     UBLOX_C027(),   # LPC1768
     XBED_LPC1768(), # LPC1768
     LPC2368(),
+    LPC2460(),
     LPC810(),
     LPC812(),
     LPC824(),
@@ -1257,6 +1313,7 @@ TARGETS = [
     NUCLEO_F334R8(),
     NUCLEO_F401RE(),
     NUCLEO_F411RE(),
+    NUCLEO_F446RE(),
     NUCLEO_L053R8(),
     NUCLEO_L073RZ(),
     NUCLEO_L152RE(),
@@ -1276,6 +1333,7 @@ TARGETS = [
     MTS_DRAGONFLY_F411RE(),
     DISCO_F401VC(),
     UBLOX_C029(),   # STM32F439
+    NZ32ST1L(),     # STM32L151
 
     ### Nordic ###
     NRF51822(),

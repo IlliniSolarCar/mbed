@@ -16,6 +16,8 @@
 #ifndef MBED_DEVICE_H
 #define MBED_DEVICE_H
 
+#define DEVICE_RETARGET         1
+
 #define DEVICE_PORTIN           0
 #define DEVICE_PORTOUT          0
 #define DEVICE_PORTINOUT        0
