@@ -275,11 +275,14 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mbed/libraries/mbed/api}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mbed/libraries/mbed/targets/cmsis}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mbed/libraries/mbed/common}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mbed/libraries/rtos}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mbed/libraries/rtos/rtos}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mbed/libraries/rtos/rtx/TARGET_CORTEX_M}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mbed/libraries/rtos/rtx/TARGET_CORTEX_M/TARGET_M3}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mbed/libraries/rtos/rtx/TARGET_CORTEX_M/TARGET_M3/TOOLCHAIN_GCC}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mbed/libraries/fs/fat}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mbed/libraries/fs/fat/ChaN}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mbed/libraries/fs/sd}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mbed/libraries/fs/sd/ChaN}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mbed/libraries/mbed/targets/cmsis/TARGET_NXP/TARGET_LPC15XX}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mbed/libraries/mbed/targets/cmsis/TARGET_NXP/TARGET_LPC15XX\TOOLCHAIN_GCC_CR}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mbed/libraries/mbed/targets/hal/TARGET_NXP/TARGET_LPC15XX}&quot;"/>
@@ -317,6 +320,14 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mbed/libraries/mbed/api}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mbed/libraries/mbed/targets/cmsis}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mbed/libraries/mbed/common}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mbed/libraries/rtos}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mbed/libraries/rtos/rtos}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mbed/libraries/rtos/rtx/TARGET_CORTEX_M}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mbed/libraries/rtos/rtx/TARGET_CORTEX_M/TARGET_M3}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mbed/libraries/rtos/rtx/TARGET_CORTEX_M/TARGET_M3/TOOLCHAIN_GCC}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mbed/libraries/fs/fat}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mbed/libraries/fs/fat/ChaN}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mbed/libraries/fs/sd}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mbed/libraries/mbed/targets/cmsis/TARGET_NXP/TARGET_LPC15XX}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mbed/libraries/mbed/targets/cmsis/TARGET_NXP/TARGET_LPC15XX\TOOLCHAIN_GCC_CR}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mbed/libraries/mbed/targets/hal/TARGET_NXP/TARGET_LPC15XX}&quot;"/>
@@ -337,6 +348,14 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/inc}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mbed/libraries/mbed/hal}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mbed/libraries/mbed/api}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mbed/libraries/rtos}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mbed/libraries/rtos/rtos}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mbed/libraries/rtos/rtx/TARGET_CORTEX_M}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mbed/libraries/rtos/rtx/TARGET_CORTEX_M/TARGET_M3}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mbed/libraries/rtos/rtx/TARGET_CORTEX_M/TARGET_M3/TOOLCHAIN_GCC}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mbed/libraries/fs/fat}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mbed/libraries/fs/fat/ChaN}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mbed/libraries/fs/sd}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mbed/libraries/mbed/targets/cmsis}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mbed/libraries/mbed/common}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mbed/libraries/mbed/targets/cmsis/TARGET_NXP/TARGET_LPC15XX}&quot;"/>
@@ -352,8 +371,9 @@
 					</folderInfo>
 					<folderInfo id="com.crt.advproject.config.lib.debug.1825597249.1756104248.327737127" name="/" resourcePath="libraries">
 						<toolChain id="com.crt.advproject.toolchain.lib.debug.48977245" name="Code Red MCU Tools" superClass="com.crt.advproject.toolchain.lib.debug" unusedChildren="">
+							<targetPlatform binaryParser="org.eclipse.cdt.core.ELF;org.eclipse.cdt.core.GNU_ELF" id="com.crt.advproject.platform.lib.debug" name="ARM-based MCU (Debug)" superClass="com.crt.advproject.platform.lib.debug"/>
 							<tool id="com.crt.advproject.cpp.lib.debug.744108696" name="MCU C++ Compiler" superClass="com.crt.advproject.cpp.lib.debug.223033296">
-								<option id="gnu.cpp.compiler.option.include.paths.1929178730" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
+								<option id="gnu.cpp.compiler.option.include.paths.1929178730" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mbed}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/inc}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mbed/libraries/mbed/hal}&quot;"/>
