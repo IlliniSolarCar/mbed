@@ -55,6 +55,7 @@
 								<option id="gnu.cpp.compiler.option.dialect.std.1032686233" name="Language standard" superClass="gnu.cpp.compiler.option.dialect.std" value="gnu.cpp.compiler.dialect.c++11" valueType="enumerated"/>
 								<option id="com.crt.advproject.cpp.lib.debug.option.debugging.level.340214274" name="Debug Level" superClass="com.crt.advproject.cpp.lib.debug.option.debugging.level" value="gnu.cpp.compiler.debugging.level.max" valueType="enumerated"/>
 								<option id="gnu.cpp.compiler.option.optimization.flags.2133588701" name="Other optimization flags" superClass="gnu.cpp.compiler.option.optimization.flags" value="" valueType="string"/>
+								<option id="com.crt.advproject.cpp.specs.956635567" name="Specs" superClass="com.crt.advproject.cpp.specs" value="com.crt.advproject.cpp.specs.newlibnano" valueType="enumerated"/>
 								<inputType id="com.crt.advproject.compiler.cpp.input.1438277909" superClass="com.crt.advproject.compiler.cpp.input"/>
 							</tool>
 							<tool id="com.crt.advproject.gcc.lib.debug.1126841005" name="MCU C Compiler" superClass="com.crt.advproject.gcc.lib.debug">
@@ -80,6 +81,7 @@
 								<option id="com.crt.advproject.gcc.lto.1452768439" name="Enable Link-time optimization (-flto)" superClass="com.crt.advproject.gcc.lto" value="false" valueType="boolean"/>
 								<option id="gnu.c.compiler.option.optimization.flags.1461070483" name="Other optimization flags" superClass="gnu.c.compiler.option.optimization.flags" value="" valueType="string"/>
 								<option id="com.crt.advproject.c.misc.dialect.1019766474" name="Language standard" superClass="com.crt.advproject.c.misc.dialect" value="com.crt.advproject.misc.dialect.default" valueType="enumerated"/>
+								<option id="com.crt.advproject.gcc.specs.2428628" name="Specs" superClass="com.crt.advproject.gcc.specs" value="com.crt.advproject.gcc.specs.newlibnano" valueType="enumerated"/>
 								<inputType id="com.crt.advproject.compiler.input.2145906187" superClass="com.crt.advproject.compiler.input"/>
 							</tool>
 							<tool id="com.crt.advproject.gas.lib.debug.201637101" name="MCU Assembler" superClass="com.crt.advproject.gas.lib.debug">
@@ -95,6 +97,7 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mbed/libraries/mbed/targets/hal/TARGET_NXP/TARGET_LPC11XX_11CXX}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mbed/libraries/mbed/targets/hal/TARGET_NXP/TARGET_LPC11XX_11CXX/TARGET_LPC11CXX}&quot;"/>
 								</option>
+								<option id="com.crt.advproject.gas.specs.1541241770" name="Specs" superClass="com.crt.advproject.gas.specs" value="com.crt.advproject.gas.specs.newlibnano" valueType="enumerated"/>
 								<inputType id="cdt.managedbuild.tool.gnu.assembler.input.1913671800" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
 								<inputType id="com.crt.advproject.assembler.input.80403252" name="Additional Assembly Source Files" superClass="com.crt.advproject.assembler.input"/>
 							</tool>
@@ -158,6 +161,7 @@
 								<option id="com.crt.advproject.cpp.lto.1878769691" name="Enable Link-time optimization (-flto)" superClass="com.crt.advproject.cpp.lto" value="false" valueType="boolean"/>
 								<option id="gnu.cpp.compiler.option.dialect.std.350327994" name="Language standard" superClass="gnu.cpp.compiler.option.dialect.std" value="gnu.cpp.compiler.dialect.default" valueType="enumerated"/>
 								<option id="com.crt.advproject.cpp.lib.release.option.debugging.level.748409383" name="Debug Level" superClass="com.crt.advproject.cpp.lib.release.option.debugging.level" value="gnu.cpp.compiler.debugging.level.minimal" valueType="enumerated"/>
+								<option id="com.crt.advproject.cpp.specs.1446256826" name="Specs" superClass="com.crt.advproject.cpp.specs" value="com.crt.advproject.cpp.specs.newlibnano" valueType="enumerated"/>
 								<inputType id="com.crt.advproject.compiler.cpp.input.1666370227" superClass="com.crt.advproject.compiler.cpp.input"/>
 							</tool>
 							<tool id="com.crt.advproject.gcc.lib.release.135240214" name="MCU C Compiler" superClass="com.crt.advproject.gcc.lib.release">
@@ -184,6 +188,7 @@
 								<option id="com.crt.advproject.gcc.lto.1490885848" name="Enable Link-time optimization (-flto)" superClass="com.crt.advproject.gcc.lto" value="false" valueType="boolean"/>
 								<option id="com.crt.advproject.gcc.lib.release.option.debugging.level.551047050" name="Debug Level" superClass="com.crt.advproject.gcc.lib.release.option.debugging.level" value="gnu.c.debugging.level.minimal" valueType="enumerated"/>
 								<option id="gnu.c.compiler.option.optimization.flags.774510422" name="Other optimization flags" superClass="gnu.c.compiler.option.optimization.flags" value="" valueType="string"/>
+								<option id="com.crt.advproject.gcc.specs.1834287011" name="Specs" superClass="com.crt.advproject.gcc.specs" value="com.crt.advproject.gcc.specs.newlibnano" valueType="enumerated"/>
 								<inputType id="com.crt.advproject.compiler.input.624139689" superClass="com.crt.advproject.compiler.input"/>
 							</tool>
 							<tool id="com.crt.advproject.gas.lib.release.75548711" name="MCU Assembler" superClass="com.crt.advproject.gas.lib.release">
@@ -199,6 +204,7 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mbed/sdk-mbed/targets/hal/TARGET_NXP/TARGET_LPC11XX_11CXX}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mbed/sdk-mbed/targets/hal/TARGET_NXP/TARGET_LPC11XX_11CXX/TARGET_LPC11CXX}&quot;"/>
 								</option>
+								<option id="com.crt.advproject.gas.specs.1859635687" name="Specs" superClass="com.crt.advproject.gas.specs" value="com.crt.advproject.gas.specs.newlibnano" valueType="enumerated"/>
 								<inputType id="cdt.managedbuild.tool.gnu.assembler.input.833632457" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
 								<inputType id="com.crt.advproject.assembler.input.1475238554" name="Additional Assembly Source Files" superClass="com.crt.advproject.assembler.input"/>
 							</tool>
@@ -269,6 +275,8 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mbed/libraries/mbed/api}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mbed/libraries/mbed/targets/cmsis}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mbed/libraries/mbed/common}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mbed/libraries/rtos/rtos}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mbed/libraries/rtos/rtx/TARGET_CORTEX_M}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mbed/libraries/mbed/targets/cmsis/TARGET_NXP/TARGET_LPC15XX}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mbed/libraries/mbed/targets/cmsis/TARGET_NXP/TARGET_LPC15XX\TOOLCHAIN_GCC_CR}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mbed/libraries/mbed/targets/hal/TARGET_NXP/TARGET_LPC15XX}&quot;"/>
@@ -313,6 +321,7 @@
 								<option id="com.crt.advproject.gcc.lto.1296906612" name="Enable Link-time optimization (-flto)" superClass="com.crt.advproject.gcc.lto" value="false" valueType="boolean"/>
 								<option id="gnu.c.compiler.option.optimization.flags.1486373316" name="Other optimization flags" superClass="gnu.c.compiler.option.optimization.flags" value="" valueType="string"/>
 								<option id="com.crt.advproject.c.misc.dialect.805569899" name="Language standard" superClass="com.crt.advproject.c.misc.dialect" value="com.crt.advproject.misc.dialect.c11" valueType="enumerated"/>
+								<option id="com.crt.advproject.gcc.specs.1705879883" name="Specs" superClass="com.crt.advproject.gcc.specs" value="com.crt.advproject.gcc.specs.newlib" valueType="enumerated"/>
 								<inputType id="com.crt.advproject.compiler.input.849826839" superClass="com.crt.advproject.compiler.input"/>
 							</tool>
 							<tool id="com.crt.advproject.gas.lib.debug.2090217171" name="MCU Assembler" superClass="com.crt.advproject.gas.lib.debug">
@@ -331,6 +340,7 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mbed/libraries/mbed/targets/cmsis/TARGET_NXP/TARGET_LPC15XX\TOOLCHAIN_GCC_CR}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mbed/libraries/mbed/targets/hal/TARGET_NXP/TARGET_LPC15XX}&quot;"/>
 								</option>
+								<option id="com.crt.advproject.gas.specs.1920973362" name="Specs" superClass="com.crt.advproject.gas.specs" value="com.crt.advproject.gas.specs.newlib" valueType="enumerated"/>
 								<inputType id="cdt.managedbuild.tool.gnu.assembler.input.68813651" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
 								<inputType id="com.crt.advproject.assembler.input.1628792996" name="Additional Assembly Source Files" superClass="com.crt.advproject.assembler.input"/>
 							</tool>
@@ -338,7 +348,7 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry excluding="libraries/mbed/targets/cmsis/TARGET_NXP/TARGET_LPC2460|libraries/mbed/targets/cmsis/TARGET_WIZNET|libraries/mbed/targets/cmsis/TARGET_Silicon_Labs|libraries/mbed/targets/cmsis/TARGET_Maxim|libraries/mbed/targets/hal/TARGET_NXP/TARGET_LPC2460|libraries/mbed/targets/hal/TARGET_WIZNET|libraries/mbed/targets/hal/TARGET_Silicon_Labs|libraries/mbed/targets/hal/TARGET_Maxim|libraries/mbed/targets/cmsis/TARGET_NXP/TARGET_LPC15XX/TOOLCHAIN_GCC_ARM|libraries/mbed/targets/cmsis/TARGET_NXP/TARGET_LPC15XX/TOOLCHAIN_IAR|libraries/mbed/targets/cmsis/TARGET_NXP/TARGET_LPC15XX/TOOLCHAIN_ARM_MICRO|libraries/mbed/targets/hal/TARGET_NXP/TARGET_LPC11XX_11CXX|libraries/mbed/targets/cmsis/TARGET_NXP/TARGET_LPC11XX_11CXX|LPC1549|libraries/mbed/targets/cmsis/TARGET_NXP/TARGET_LPC11XX_11CXX/TOOLCHAIN_IAR|libraries/mbed/targets/cmsis/TARGET_NXP/TARGET_LPC11XX_11CXX/TOOLCHAIN_GCC_CS|libraries/mbed/targets/cmsis/TARGET_NXP/TARGET_LPC11XX_11CXX/TOOLCHAIN_GCC_CR|libraries/mbed/targets/cmsis/TARGET_NXP/TARGET_LPC11XX_11CXX/TOOLCHAIN_GCC_ARM|libraries/mbed/targets/cmsis/TARGET_NXP/TARGET_LPC11XX_11CXX/TOOLCHAIN_ARM_STD|libraries/mbed/targets/cmsis/TARGET_NXP/TARGET_LPC11XX_11CXX/TOOLCHAIN_ARM_MICRO|libraries/mbed/targets/cmsis/TARGET_NXP/TARGET_LPC82X|libraries/mbed/targets/cmsis/TARGET_NXP/TARGET_LPC81X|libraries/mbed/targets/cmsis/TARGET_NXP/TARGET_LPC43XX|libraries/mbed/targets/cmsis/TARGET_NXP/TARGET_LPC408X|libraries/mbed/targets/cmsis/TARGET_NXP/TARGET_LPC23XX|libraries/mbed/targets/cmsis/TARGET_NXP/TARGET_LPC176X|libraries/mbed/targets/cmsis/TARGET_NXP/TARGET_LPC13XX|libraries/mbed/targets/cmsis/TARGET_NXP/TARGET_LPC11UXX|libraries/mbed/targets/cmsis/TARGET_NXP/TARGET_LPC11U6X|libraries/mbed/targets/cmsis/TOOLCHAIN_GCC|libraries/mbed/targets/cmsis/TOOLCHAIN_IAR|libraries/mbed/targets/cmsis/TARGET_STM|libraries/mbed/targets/cmsis/TARGET_RENESAS|libraries/mbed/targets/cmsis/TARGET_NORDIC|libraries/mbed/targets/cmsis/TARGET_Freescale|libraries/mbed/targets/hal/TARGET_NXP/TARGET_LPC82X|libraries/mbed/targets/hal/TARGET_NXP/TARGET_LPC81X|libraries/mbed/targets/hal/TARGET_NXP/TARGET_LPC43XX|libraries/mbed/targets/hal/TARGET_NXP/TARGET_LPC408X|libraries/mbed/targets/hal/TARGET_NXP/TARGET_LPC23XX|libraries/mbed/targets/hal/TARGET_NXP/TARGET_LPC176X|libraries/mbed/targets/hal/TARGET_NXP/TARGET_LPC13XX|libraries/mbed/targets/hal/TARGET_NXP/TARGET_LPC11UXX|libraries/mbed/targets/hal/TARGET_NXP/TARGET_LPC11U6X|libraries/mbed/targets/hal/TARGET_STM|libraries/mbed/targets/hal/TARGET_RENESAS|libraries/mbed/targets/hal/TARGET_NORDIC|libraries/mbed/targets/hal/TARGET_Freescale|Debug|libraries/fs|libraries/dsp|libraries/doc|libraries/USBHost|libraries/USBDevice|libraries/tests|libraries/rtos|libraries/rpc|libraries/net|travis|workspace_tools" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+						<entry excluding="libraries/rtos/rtx/TARGET_CORTEX_M/TARGET_M3/TOOLCHAIN_ARM|libraries/rtos/rtx/TARGET_CORTEX_A|libraries/rtos/rtx/TARGET_ARM7|libraries/rtos/rtx/TARGET_CORTEX_M/TARGET_M3/TOOLCHAIN_IAR|libraries/rtos/rtx/TARGET_CORTEX_M/TARGET_M0P|libraries/rtos/rtx/TARGET_CORTEX_M/TARGET_M0|libraries/rtos/rtx/TARGET_CORTEX_M/TARGET_M4|libraries/mbed/targets/cmsis/TARGET_NXP/TARGET_LPC2460|libraries/mbed/targets/cmsis/TARGET_WIZNET|libraries/mbed/targets/cmsis/TARGET_Silicon_Labs|libraries/mbed/targets/cmsis/TARGET_Maxim|libraries/mbed/targets/hal/TARGET_NXP/TARGET_LPC2460|libraries/mbed/targets/hal/TARGET_WIZNET|libraries/mbed/targets/hal/TARGET_Silicon_Labs|libraries/mbed/targets/hal/TARGET_Maxim|libraries/mbed/targets/cmsis/TARGET_NXP/TARGET_LPC15XX/TOOLCHAIN_GCC_ARM|libraries/mbed/targets/cmsis/TARGET_NXP/TARGET_LPC15XX/TOOLCHAIN_IAR|libraries/mbed/targets/cmsis/TARGET_NXP/TARGET_LPC15XX/TOOLCHAIN_ARM_MICRO|libraries/mbed/targets/hal/TARGET_NXP/TARGET_LPC11XX_11CXX|libraries/mbed/targets/cmsis/TARGET_NXP/TARGET_LPC11XX_11CXX|LPC1549|libraries/mbed/targets/cmsis/TARGET_NXP/TARGET_LPC11XX_11CXX/TOOLCHAIN_IAR|libraries/mbed/targets/cmsis/TARGET_NXP/TARGET_LPC11XX_11CXX/TOOLCHAIN_GCC_CS|libraries/mbed/targets/cmsis/TARGET_NXP/TARGET_LPC11XX_11CXX/TOOLCHAIN_GCC_CR|libraries/mbed/targets/cmsis/TARGET_NXP/TARGET_LPC11XX_11CXX/TOOLCHAIN_GCC_ARM|libraries/mbed/targets/cmsis/TARGET_NXP/TARGET_LPC11XX_11CXX/TOOLCHAIN_ARM_STD|libraries/mbed/targets/cmsis/TARGET_NXP/TARGET_LPC11XX_11CXX/TOOLCHAIN_ARM_MICRO|libraries/mbed/targets/cmsis/TARGET_NXP/TARGET_LPC82X|libraries/mbed/targets/cmsis/TARGET_NXP/TARGET_LPC81X|libraries/mbed/targets/cmsis/TARGET_NXP/TARGET_LPC43XX|libraries/mbed/targets/cmsis/TARGET_NXP/TARGET_LPC408X|libraries/mbed/targets/cmsis/TARGET_NXP/TARGET_LPC23XX|libraries/mbed/targets/cmsis/TARGET_NXP/TARGET_LPC176X|libraries/mbed/targets/cmsis/TARGET_NXP/TARGET_LPC13XX|libraries/mbed/targets/cmsis/TARGET_NXP/TARGET_LPC11UXX|libraries/mbed/targets/cmsis/TARGET_NXP/TARGET_LPC11U6X|libraries/mbed/targets/cmsis/TOOLCHAIN_GCC|libraries/mbed/targets/cmsis/TOOLCHAIN_IAR|libraries/mbed/targets/cmsis/TARGET_STM|libraries/mbed/targets/cmsis/TARGET_RENESAS|libraries/mbed/targets/cmsis/TARGET_NORDIC|libraries/mbed/targets/cmsis/TARGET_Freescale|libraries/mbed/targets/hal/TARGET_NXP/TARGET_LPC82X|libraries/mbed/targets/hal/TARGET_NXP/TARGET_LPC81X|libraries/mbed/targets/hal/TARGET_NXP/TARGET_LPC43XX|libraries/mbed/targets/hal/TARGET_NXP/TARGET_LPC408X|libraries/mbed/targets/hal/TARGET_NXP/TARGET_LPC23XX|libraries/mbed/targets/hal/TARGET_NXP/TARGET_LPC176X|libraries/mbed/targets/hal/TARGET_NXP/TARGET_LPC13XX|libraries/mbed/targets/hal/TARGET_NXP/TARGET_LPC11UXX|libraries/mbed/targets/hal/TARGET_NXP/TARGET_LPC11U6X|libraries/mbed/targets/hal/TARGET_STM|libraries/mbed/targets/hal/TARGET_RENESAS|libraries/mbed/targets/hal/TARGET_NORDIC|libraries/mbed/targets/hal/TARGET_Freescale|Debug|libraries/fs|libraries/dsp|libraries/doc|libraries/USBHost|libraries/USBDevice|libraries/tests|libraries/rpc|libraries/net|travis|workspace_tools" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
