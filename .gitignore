@@ -75,3 +75,4 @@ cscope.*
 
 /Debug/
 /LPC1549/
+/LPC1549-noRTOS/
