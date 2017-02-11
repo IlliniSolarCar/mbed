@@ -123,7 +123,7 @@ SDFileSystem::SDFileSystem(PinName mosi, PinName miso, PinName sclk, PinName cs,
     FATFileSystem(name), _spi(mosi, miso, sclk), _cs(cs), _is_initialized(0) {
     _cs = 1;
 
-    // Set default to 100kHz for initialisation and 15MHz for data transfer
+    // Set default to 100kHz for initialisation
     _init_sck = 100000;
     _transfer_sck = SPIfreq;
 }

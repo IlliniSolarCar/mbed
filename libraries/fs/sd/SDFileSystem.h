@@ -81,10 +81,10 @@ protected:
     uint32_t _init_sck;
     uint32_t _transfer_sck;
 
-    int _is_initialized;
     SPI _spi;
     DigitalOut _cs;
     int cdv;
+    int _is_initialized;
 };
 
 #endif
