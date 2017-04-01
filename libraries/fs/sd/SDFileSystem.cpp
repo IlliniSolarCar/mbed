@@ -119,13 +119,13 @@
 
 #define SD_DBG             0
 
-SDFileSystem::SDFileSystem(PinName mosi, PinName miso, PinName sclk, PinName cs, const char* name) :
+SDFileSystem::SDFileSystem(PinName mosi, PinName miso, PinName sclk, PinName cs, const char* name, int SPIfreq) :
     FATFileSystem(name), _spi(mosi, miso, sclk), _cs(cs), _is_initialized(0) {
     _cs = 1;
 
-    // Set default to 100kHz for initialisation and 1MHz for data transfer
+    // Set default to 100kHz for initialisation
     _init_sck = 100000;
-    _transfer_sck = 1000000;
+    _transfer_sck = SPIfreq;
 }
 
 #define R1_IDLE_STATE           (1 << 0)
@@ -220,6 +220,11 @@ int SDFileSystem::disk_initialize() {
 
     // Set SCK for data transfer
     _spi.frequency(_transfer_sck);
+    return 0;
+}
+
+int SDFileSystem::disk_disconnected(){
+    _is_initialized=0;
     return 0;
 }
 
