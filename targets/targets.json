@@ -297,6 +297,7 @@
         "device_name": "LPC1768"
     },
     "LPC810": {
+        "supported_form_factors": ["ARDUINO"],
         "inherits": ["LPCTarget"],
         "core": "Cortex-M0+",
         "default_toolchain": "uARM",
@@ -306,6 +307,18 @@
         "device_has": ["I2C", "I2CSLAVE", "INTERRUPTIN", "PWMOUT", "SERIAL", "SERIAL_FC", "SLEEP", "SPI", "SPISLAVE"],
         "default_lib": "small",
         "device_name": "LPC810M021FN8"
+    },
+    "LPC811": {
+        "supported_form_factors": ["ARDUINO"],
+        "inherits": ["LPCTarget"],
+        "core": "Cortex-M0+",
+        "default_toolchain": "uARM",
+        "extra_labels": ["NXP", "LPC81X"],
+        "is_disk_virtual": true,
+        "supported_toolchains": ["uARM", "IAR", "GCC_ARM"],
+        "device_has": ["I2C", "I2CSLAVE", "INTERRUPTIN", "PWMOUT", "SERIAL", "SERIAL_FC", "SLEEP", "SPI", "SPISLAVE"],
+        "default_lib": "small",
+        "device_name": "LPC811"
     },
     "LPC812": {
         "supported_form_factors": ["ARDUINO"],
