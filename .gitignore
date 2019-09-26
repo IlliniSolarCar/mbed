@@ -76,6 +76,12 @@ cscope.*
 
 /LPC11c14/
 /LPC1549/
+/LPC1517/
 /LPC1549-noRTOS/
 /LPC15xx/
-/LPC1517/
+
+
+#project files
+.project
+.cproject
+
