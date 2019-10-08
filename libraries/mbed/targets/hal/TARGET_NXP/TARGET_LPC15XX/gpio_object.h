@@ -33,7 +33,8 @@ typedef struct {
 } gpio_t;
 
 static inline void gpio_write(gpio_t *obj, int value) {
-    MBED_ASSERT(obj->pin != (PinName)NC);
+    if(obj->pin == (PinName)(NC))
+        return;
 
     if (value)
         *obj->reg_set = obj->mask;
