@@ -85,3 +85,5 @@ cscope.*
 .project
 .cproject
 
+/LPC15x/
+/LPC15x9/
