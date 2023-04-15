@@ -48,7 +48,8 @@ void CAN::reset() {
 }
 
 CAN::TxStatus CAN::txstatus() {
-	return (TxStatus)can_tx_status(&_can);
+	return (CAN::TxStatus)0;
+	//return (TxStatus)can_tx_status(&_can);
 }
 
 unsigned char CAN::rderror() {
