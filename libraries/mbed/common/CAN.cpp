@@ -47,6 +47,10 @@ void CAN::reset() {
     can_reset(&_can);
 }
 
+void CAN::enable(){
+	can_enable(&_can);
+}
+
 CAN::TxStatus CAN::txstatus() {
 	return (CAN::TxStatus)0;
 	//return (TxStatus)can_tx_status(&_can);

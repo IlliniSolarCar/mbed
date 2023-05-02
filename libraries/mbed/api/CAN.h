@@ -245,6 +245,9 @@ public:
     }
 
     static void _irq_handler(uint32_t id, CanIrqType type);
+    /**
+     * Function for LPC17xx to enable CAN controller*/
+    void enable();
 
 protected:
     can_t           _can;
