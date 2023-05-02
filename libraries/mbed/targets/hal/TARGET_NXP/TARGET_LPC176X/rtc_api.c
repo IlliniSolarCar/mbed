@@ -96,7 +96,7 @@ time_t rtc_read(void) {
 void rtc_write(time_t t) {
     // Convert the time in to a tm
     struct tm *timeinfo = localtime(&t);
-    
+
     // Pause clock, and clear counter register (clears us count)
     LPC_RTC->CCR |= 2;
     
