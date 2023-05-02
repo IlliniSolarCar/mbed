@@ -1,5 +1,8 @@
+
+/** \addtogroup hal */
+/** @{*/
 /* mbed Microcontroller Library
- * Copyright (c) 2006-2013 ARM Limited
+ * Copyright (c) 2006-2016 ARM Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -50,19 +53,14 @@ typedef enum {
     MODE_TEST_SILENT
 } CanMode;
 
-typedef enum {
-	TX_STATE_IDLE,
-	TX_STATE_AVAILABLE,
-	TX_STATE_BUSY
-} CanTxState;
-
 typedef void (*can_irq_handler)(uint32_t id, CanIrqType type);
 
 typedef struct can_s can_t;
 
-void          can_init     (can_t *obj, PinName rd, PinName td);
-void          can_free     (can_t *obj);
-int           can_frequency(can_t *obj, int hz);
+void          can_init      (can_t *obj, PinName rd, PinName td);
+void          can_init_freq (can_t *obj, PinName rd, PinName td, int hz);
+void          can_free      (can_t *obj);
+int           can_frequency (can_t *obj, int hz);
 
 void          can_irq_init (can_t *obj, can_irq_handler handler, uint32_t id);
 void          can_irq_free (can_t *obj);
@@ -73,7 +71,6 @@ int           can_read     (can_t *obj, CAN_Message *msg, int handle);
 int           can_mode     (can_t *obj, CanMode mode);
 int           can_filter(can_t *obj, uint32_t id, uint32_t mask, CANFormat format, int32_t handle);
 void          can_reset    (can_t *obj);
-CanTxState    can_tx_status(can_t *obj);
 unsigned char can_rderror  (can_t *obj);
 unsigned char can_tderror  (can_t *obj);
 void          can_monitor  (can_t *obj, int silent);
@@ -85,3 +82,5 @@ void          can_monitor  (can_t *obj, int silent);
 #endif    // MBED_CAN_API_H
 
 #endif
+
+/** @}*/
