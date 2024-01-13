@@ -10,7 +10,7 @@ MANIFEST
 private_settings.py
 
 #Language Settings
-settings/language.settings.xml
+.settings/
 
 # Default Build Directory
 build/
